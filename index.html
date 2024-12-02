@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link para o arquivo CSS -->
+</head>
+<body>
+    <h1>Comanf - Formulário</h1>
+
+    <img src="https://images-ext-1.discordapp.net/external/2xuSP4Nk7trHH4FofsK9vOyObryLvQElicuJJnFGfTQ/%3Fsize%3D2048/https/cdn.discordapp.com/icons/1262330004734349384/4810e501604f87ef7283db65e2eba870.png?format=webp&quality=lossless" alt="Logo" class="logo">
+
+    <div class="form-container">
+        <input type="text" class="input-box" id="input1" placeholder="Qual seu Nick no Discord?" minlength="2" required>
+        <input type="text" class="input-box" id="input2" placeholder="Qual seu Nick no Game?" minlength="2" required>
+        <input type="number" class="input-box" id="input3" placeholder="Quantas horas jogadas no jogo?" required>
+        <input type="text" class="input-box" id="input4" placeholder="Já foi parte de alguma corporação? Se sim, qual?" minlength="2" required>
+        <input type="text" class="input-box" id="input5" placeholder="Qual seu ID no jogo?" minlength="2" required>
+        <input type="text" class="input-box" id="input6" placeholder="Já recebeu alguma punição no jogo?" minlength="2" required>
+        <button id="submitBtn" class="enabled" disabled>Enviar</button>
+    </div>
+
+    <script>
+        // Verificar se todos os campos estão preenchidos
+        const inputs = document.querySelectorAll('.input-box');
+        const submitButton = document.getElementById('submitBtn');
+
+        inputs.forEach(input => {
+            input.addEventListener('input', validateForm);
+        });
+
+        function validateForm() {
+            let allFilled = true;
+
+            // Verifica se todos os campos estão preenchidos e válidos
+            inputs.forEach(input => {
+                if (!input.value || input.value.length < 2) {
+                    allFilled = false;
+                }
+            });
+
+            // Ativa ou desativa o botão de envio
+            if (allFilled) {
+                submitButton.classList.add('enabled');
+                submitButton.disabled = false; // Habilitar botão
+            } else {
+                submitButton.classList.remove('enabled');
+                submitButton.disabled = true; // Desabilitar botão
+            }
+        }
+
+        // Função para enviar os dados para o Webhook do Discord
+        submitButton.addEventListener('click', submitForm);
+
+        function submitForm() {
+            const data = {
+                content: "Novo formulário enviado!",
+                embeds: [{
+                    title: "Formulário Completo",
+                    fields: [
+                        { name: "Nick Discord?", value: document.getElementById('input1').value },
+                        { name: "Nick Game?", value: document.getElementById('input2').value },
+                        { name: "Quantas Horas jogadas?", value: document.getElementById('input3').value },
+                        { name: "Já foi de corp? Sim de qual?", value: document.getElementById('input4').value },
+                        { name: "Id in Game", value: document.getElementById('input5').value },
+                        { name: "Já tomou alguma punição in game?", value: document.getElementById('input6').value }
+                    ]
+                }]
+            };
+
+            fetch('https://canary.discord.com/api/webhooks/1313201263092957195/veCP0rPj03VpiBYDu0ulTJyXJfy4cLiz_VSZSjerE7DQJSYxlW1wzyKHHY5CylWdkfaC', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.ok) {
+                    alert("Formulário enviado com sucesso!");
+                    // Limpar campos após envio
+                    inputs.forEach(input => input.value = '');
+                    validateForm(); // Desabilitar o botão novamente
+                } else {
+                    alert("Falha ao enviar o formulário.");
+                }
+            }).catch(error => {
+                console.error('Erro ao enviar:', error);
+                alert("Erro ao enviar o formulário.");
+            });
+        }
+    </script>
+</body>
+</html>

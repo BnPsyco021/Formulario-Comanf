@@ -1,0 +1,117 @@
+body {
+    background-image: url('https://via.placeholder.com/1920x1080'); /* Substitua pela URL da imagem desejada */
+    background-size: cover; /* A imagem vai cobrir toda a tela */
+    background-position: center; /* A imagem será centralizada */
+    background-repeat: no-repeat; /* A imagem não será repetida */
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 500px;
+    margin-top: -50px; /* Ajusta a posição das caixas para cima */
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo semitransparente para destacar o formulário */
+    padding: 20px;
+    border-radius: 15px; /* Deixa os cantos arredondados */
+}
+
+.input-box {
+    border-radius: 15px;
+    border: 2px solid #6a0dad;
+    background-color: #444;
+    padding: 10px;
+    color: white;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+button {
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+button:disabled {
+    background-color: #444;
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+button.enabled {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #333;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.input-box:focus {
+    border-color: #9b59b6;
+}
+
+.input-box:invalid {
+    border-color: red;
+}
+
+/* Media Queries - Responsividade */
+@media (max-width: 768px) {
+    .form-container {
+        width: 80%;
+        max-width: 400px;
+        margin-top: -30px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .form-container {
+        width: 90%;
+        max-width: 350px;
+        margin-top: 0;
+    }
+}
